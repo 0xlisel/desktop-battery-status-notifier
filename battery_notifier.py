@@ -1,4 +1,4 @@
-# A Desktop Battery Notifier Program
+# Desktop Battery Status Notifier
 
 from psutil import sensors_battery
 from plyer import notification
@@ -8,13 +8,27 @@ import math
 # print(sensors_battery().power_plugged)
 
 #title of notification
-title = 'Battery Reminder'
+title = 'Battery Status'
 
 # notification message
 message = f'Battery remaining: {math.floor(sensors_battery().percent)}%' 
 
-# timeout = 10 # duration to display the message, default = 10
+# timeout = 10 - duration to display the message, default = 10
 notification.notify(title, message, 10)
+
+# this function will loop until the charger is plugged out
+def plugged_in():
+    title = 'Plugged in'
+
+# this function will loop until the charger is plugged in
+def on_battery():
+    title = 'On battery'
+
+if __name__ == '__main__':
+    if sensors_battery.power_plugged:
+        plugged_in()
+    else:
+        on_battery()
 
 # def notifier():
 #     ... 
